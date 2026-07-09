@@ -1,37 +1,45 @@
-import { ArrowRight } from 'lucide-react'
+'use client'
+
+import { useEffect } from 'react'
+import Cal, { getCalApi } from '@calcom/embed-react'
 import { Reveal } from '@/components/reveal'
 
+const CAL_LINK = 'denis-jucan-tawgmj/free-60-minute-wellness-session'
+const CAL_NAMESPACE = 'free-60-minute-wellness-session'
+
 export function BookingCta() {
+  useEffect(() => {
+    ;(async () => {
+      const cal = await getCalApi({ namespace: CAL_NAMESPACE })
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' })
+    })()
+  }, [])
+
   return (
     <section id="booking" className="mx-auto max-w-[1280px] px-6 py-20 lg:py-28">
       <Reveal>
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-balance font-serif text-4xl font-semibold leading-tight text-foreground lg:text-5xl">
+            Ready to shift and glow?
+          </h2>
+          <p className="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
+            Your free 60-minute session is waiting. Choose a time below—no account needed.
+          </p>
+        </div>
+
         <div
-          className="relative overflow-hidden rounded-[32px] px-8 py-16 text-center lg:px-16 lg:py-24"
-          style={{
-            background: 'linear-gradient(135deg, #f4efe8 0%, #faf8f4 100%)',
-          }}
+          id="my-cal-inline-free-60-minute-wellness-session"
+          className="mt-12 min-h-[580px] w-full overflow-auto rounded-3xl border border-divider bg-surface p-2 shadow-[0_24px_70px_-40px_rgba(38,38,38,0.2)] sm:p-4"
         >
-          <div
-            className="animate-glow pointer-events-none absolute left-1/2 top-0 size-[420px] -translate-x-1/2 rounded-full blur-3xl"
-            style={{ background: 'radial-gradient(circle, rgba(200,169,106,0.22), transparent 70%)' }}
-            aria-hidden
+          <Cal
+            namespace={CAL_NAMESPACE}
+            calLink={CAL_LINK}
+            config={{
+              layout: 'month_view',
+              useSlotsViewOnSmallScreen: 'true',
+            }}
+            style={{ width: '100%', height: '100%', overflow: 'scroll' }}
           />
-          <div className="relative mx-auto max-w-2xl">
-            <h2 className="text-balance font-serif text-4xl font-semibold leading-tight text-foreground lg:text-6xl">
-              Ready to shift and glow?
-            </h2>
-            <p className="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
-              Your free 60-minute session is waiting. Take the first gentle step toward clarity,
-              calm, and a life that moves with you.
-            </p>
-            <a
-              href="#booking"
-              className="group mt-9 inline-flex items-center justify-center gap-2 rounded-2xl bg-gold px-8 py-4 text-base font-semibold text-primary-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-hover hover:shadow-lg"
-            >
-              Book Your Free Session
-              <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
-          </div>
         </div>
       </Reveal>
     </section>

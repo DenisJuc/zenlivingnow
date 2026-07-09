@@ -1,0 +1,82 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand palette */
+  --color-background: #faf8f4;
+  --color-foreground: #262626;
+  --color-surface: #ffffff;
+  --color-muted-surface: #f7f6f3;
+
+  --color-gold: #c8a96a;
+  --color-gold-hover: #b79350;
+  --color-sage: #8aa88a;
+  --color-sage-hover: #769676;
+  --color-terracotta: #c78c72;
+  --color-divider: #e7e2db;
+
+  --color-card: #ffffff;
+  --color-card-foreground: #262626;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #262626;
+  --color-primary: #c8a96a;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f4efe8;
+  --color-secondary-foreground: #262626;
+  --color-muted: #f7f6f3;
+  --color-muted-foreground: #5a5a5a;
+  --color-accent: #8aa88a;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #b25050;
+  --color-border: #e7e2db;
+  --color-input: #e7e2db;
+  --color-ring: #c8a96a;
+
+  --radius-sm: 0.875rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer utilities {
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.08);
+    }
+  }
+
+  .animate-glow {
+    animation: glow-pulse 7s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-glow {
+      animation: none;
+    }
+  }
+}

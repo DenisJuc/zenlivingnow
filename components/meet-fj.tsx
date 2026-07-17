@@ -30,7 +30,7 @@ export function MeetFj() {
           </blockquote>
 
           <a
-            href="#about"
+            href="/about"
             className="group mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-gold px-7 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-gold hover:text-primary-foreground"
           >
             Read My Story

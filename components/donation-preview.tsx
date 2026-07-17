@@ -24,7 +24,9 @@ export function DonationPreview() {
               only gratitude.
             </p>
             <a
-              href="#donation"
+              href="https://donate.stripe.com/6oU28t2nufeT2pj4l02ZO00"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gold px-7 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-hover hover:shadow-md"
             >
               Make a Donation

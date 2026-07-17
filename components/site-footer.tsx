@@ -3,15 +3,29 @@ import { Camera, Send, Play, Mail } from 'lucide-react'
 const FOOTER_NAV = [
   {
     heading: 'Explore',
-    links: ['Home', 'About', 'Services', 'Preparation & FAQ', 'Resources'],
+    links: [
+      { label: 'Home', href: '/#home' },
+      { label: 'About', href: '/#about' },
+      { label: 'Services', href: '/#services' },
+      { label: 'Preparation & FAQ', href: '/#resources' },
+      { label: 'Resources', href: '/#resources' },
+    ],
   },
   {
     heading: 'Connect',
-    links: ['Book a Session', 'Donation', 'Newsletter', 'Contact'],
+    links: [
+      { label: 'Book a Session', href: '/#booking' },
+      { label: 'Donation', href: '/#donation' },
+      { label: 'Newsletter', href: '/#resources' },
+      { label: 'Contact', href: '/#booking' },
+    ],
   },
   {
     heading: 'Legal',
-    links: ['Privacy Policy', 'Terms of Service'],
+    links: [
+      { label: 'Privacy Policy', href: '#' },
+      { label: 'Terms of Service', href: '#' },
+    ],
   },
 ]
 
@@ -60,12 +74,12 @@ export function SiteFooter() {
               </h3>
               <ul className="mt-4 space-y-3">
                 {group.links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
+                      href={link.href}
                       className="text-sm text-muted-foreground transition-colors hover:text-gold"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}

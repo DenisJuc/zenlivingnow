@@ -1,60 +1,12 @@
-import {
-  BookOpen,
-  HandHeart,
-  Stars,
-  Infinity as InfinityIcon,
-  Wind,
-  Eye,
-  Compass,
-  Droplets,
-  ArrowRight,
-} from 'lucide-react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
-
-const SERVICES = [
-  {
-    icon: BookOpen,
-    title: 'Akashic Records',
-    summary: 'Access the soul-level insights that illuminate your path and patterns.',
-  },
-  {
-    icon: HandHeart,
-    title: 'Reiki',
-    summary: 'Gentle energy work to release tension and restore natural balance.',
-  },
-  {
-    icon: Stars,
-    title: 'Star Magic Healing',
-    summary: 'High-frequency healing that works with light and cosmic energy.',
-  },
-  {
-    icon: InfinityIcon,
-    title: 'Access Consciousness',
-    summary: 'Powerful tools and questions that unlock ease and possibility.',
-  },
-  {
-    icon: Wind,
-    title: 'Breathwork',
-    summary: 'Guided breathing to move stuck energy and quiet a busy mind.',
-  },
-  {
-    icon: Eye,
-    title: 'Iridology',
-    summary: 'A reflective look at wellbeing through the story held in the eyes.',
-  },
-  {
-    icon: Compass,
-    title: 'Lifestyle Coaching',
-    summary: 'Grounded guidance to align daily choices with your intentions.',
-  },
-  {
-    icon: Droplets,
-    title: 'Lymphatic Support',
-    summary: 'Supportive practices that encourage flow, release, and renewal.',
-  },
-]
+import { ServiceIcon } from '@/lib/service-icons'
+import { getAllServices } from '@/lib/services'
 
 export function FeaturedServices() {
+  const services = getAllServices()
+
   return (
     <section id="services" className="bg-secondary py-20 lg:py-28">
       <div className="mx-auto max-w-[1280px] px-6">
@@ -72,11 +24,14 @@ export function FeaturedServices() {
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((service, i) => (
-            <Reveal key={service.title} delay={(i % 4) * 90}>
-              <article className="group flex h-full flex-col rounded-3xl border border-divider bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-30px_rgba(200,169,106,0.45)]">
+          {services.map((service, i) => (
+            <Reveal key={service.slug} delay={(i % 4) * 90}>
+              <Link
+                href={`/services/${service.slug}`}
+                className="group flex h-full flex-col rounded-3xl border border-divider bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-30px_rgba(200,169,106,0.45)]"
+              >
                 <div className="flex size-12 items-center justify-center rounded-2xl bg-gold/10 text-gold transition-colors duration-300 group-hover:bg-gold group-hover:text-primary-foreground">
-                  <service.icon className="size-6" strokeWidth={1.5} />
+                  <ServiceIcon icon={service.icon} className="size-6" />
                 </div>
                 <h3 className="mt-5 font-serif text-xl font-semibold text-foreground">
                   {service.title}
@@ -88,7 +43,7 @@ export function FeaturedServices() {
                   Learn More
                   <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
-              </article>
+              </Link>
             </Reveal>
           ))}
         </div>

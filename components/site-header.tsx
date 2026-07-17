@@ -5,11 +5,11 @@ import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Resources', href: '#resources' },
-  { label: 'Donation', href: '#donation' },
+  { label: 'Home', href: '/#home' },
+  { label: 'About', href: '/#about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Resources', href: '/#resources' },
+  { label: 'Donation', href: '/#donation' },
 ]
 
 export function SiteHeader() {
@@ -33,7 +33,7 @@ export function SiteHeader() {
       )}
     >
       <nav className="mx-auto flex max-w-[1280px] items-center justify-between px-6">
-        <a href="#home" className="flex items-center gap-2" aria-label="Zen Living Now home">
+        <a href="/#home" className="flex items-center gap-2" aria-label="Zen Living Now home">
           <span className="flex size-9 items-center justify-center rounded-full bg-gold/15">
             <span className="size-3 rounded-full bg-gold" />
           </span>
@@ -62,7 +62,7 @@ export function SiteHeader() {
 
         <div className="hidden md:block">
           <a
-            href="#booking"
+            href="/#booking"
             className="inline-flex h-11 items-center justify-center rounded-2xl bg-gold px-6 text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-hover hover:shadow-md"
           >
             Book Free Session
@@ -125,7 +125,7 @@ export function SiteHeader() {
             ))}
           </ul>
           <a
-            href="#booking"
+            href="/#booking"
             onClick={() => setOpen(false)}
             className="mt-auto inline-flex h-12 items-center justify-center rounded-2xl bg-gold px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-gold-hover"
           >

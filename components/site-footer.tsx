@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Camera, Send, Play, Mail } from 'lucide-react'
 
 const FOOTER_NAV = [
@@ -23,8 +24,8 @@ const FOOTER_NAV = [
   {
     heading: 'Legal',
     links: [
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Service', href: '#' },
+      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms of Service', href: '/terms' },
     ],
   },
 ]
@@ -36,11 +37,17 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2">
-              <span className="flex size-9 items-center justify-center rounded-full bg-gold/15">
-                <span className="size-3 rounded-full bg-gold" />
+            <div className="flex items-center gap-3">
+              <span className="relative flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground/90 ring-2 ring-gold/70 shadow-[0_0_18px_rgba(200,169,106,0.35)]">
+                <Image
+                  src="/images/logo-mark.png"
+                  alt="Zen Living Now logo"
+                  width={48}
+                  height={48}
+                  className="size-full rounded-full object-cover brightness-125"
+                />
               </span>
-              <span className="font-serif text-xl font-semibold text-foreground">
+              <span className="font-serif text-xl font-medium tracking-[0.08em] uppercase text-foreground">
                 Zen Living Now
               </span>
             </div>

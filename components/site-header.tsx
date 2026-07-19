@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -13,8 +15,11 @@ const NAV_LINKS = [
 ]
 
 export function SiteHeader() {
+  const pathname = usePathname()
+  const isHome = pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const light = isHome && !scrolled
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
@@ -27,32 +32,60 @@ export function SiteHeader() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled
-          ? 'bg-background/85 backdrop-blur-md border-b border-divider py-3 shadow-[0_1px_20px_rgba(38,38,38,0.04)]'
-          : 'bg-transparent py-5',
+        light
+          ? 'bg-transparent py-4'
+          : 'border-b border-divider bg-background/90 py-2.5 shadow-[0_1px_20px_rgba(38,38,38,0.04)] backdrop-blur-md',
       )}
     >
-      <nav className="mx-auto flex max-w-[1280px] items-center justify-between px-6">
-        <a href="/#home" className="flex items-center gap-2" aria-label="Zen Living Now home">
-          <span className="flex size-9 items-center justify-center rounded-full bg-gold/15">
-            <span className="size-3 rounded-full bg-gold" />
+      <nav className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-6 px-5 sm:px-6">
+        <a
+          href="/#home"
+          className="flex min-w-0 shrink-0 items-center gap-3.5"
+          aria-label="Zen Living Now home"
+        >
+          <span
+            className={cn(
+              'relative flex size-14 shrink-0 items-center justify-center rounded-full sm:size-16',
+              'ring-2 ring-gold/80 shadow-[0_0_24px_rgba(200,169,106,0.55)]',
+              light ? 'bg-black/50' : 'bg-foreground/90',
+            )}
+          >
+            <Image
+              src="/images/logo-mark.png"
+              alt=""
+              width={72}
+              height={72}
+              className="size-full rounded-full object-cover brightness-125 contrast-110"
+              priority
+              aria-hidden
+            />
           </span>
-          <span className="flex flex-col leading-none">
-            <span className="font-serif text-xl font-semibold tracking-tight text-foreground">
+          <span className="flex min-w-0 flex-col leading-none">
+            <span
+              className={cn(
+                'font-serif text-base font-medium tracking-[0.08em] uppercase sm:text-lg',
+                light ? 'text-white' : 'text-foreground',
+              )}
+            >
               Zen Living Now
             </span>
-            <span className="mt-1 font-serif text-sm font-medium italic tracking-wide text-gold">
+            <span className="mt-1 font-sans text-[10px] font-medium tracking-[0.18em] uppercase text-gold sm:text-[11px]">
               Shift and Glow
             </span>
           </span>
         </a>
 
-        <ul className="hidden items-center gap-9 md:flex">
+        <ul className="hidden items-center gap-7 md:flex lg:gap-9">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className={cn(
+                  'font-sans text-sm font-medium tracking-[0.1em] uppercase transition-colors',
+                  light
+                    ? 'text-white/90 hover:text-white'
+                    : 'text-muted-foreground hover:text-foreground',
+                )}
               >
                 {link.label}
               </a>
@@ -60,10 +93,10 @@ export function SiteHeader() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden shrink-0 md:block">
           <a
             href="/#booking"
-            className="inline-flex h-11 items-center justify-center rounded-2xl bg-gold px-6 text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-hover hover:shadow-md"
+            className="inline-flex h-11 items-center justify-center rounded-2xl bg-gold px-6 font-sans text-xs font-semibold tracking-[0.1em] uppercase text-primary-foreground shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-hover hover:shadow-md"
           >
             Book Free Session
           </a>
@@ -72,14 +105,16 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex size-10 items-center justify-center rounded-xl text-foreground md:hidden"
+          className={cn(
+            'flex size-11 shrink-0 items-center justify-center rounded-xl md:hidden',
+            light ? 'text-white' : 'text-foreground',
+          )}
           aria-label="Open menu"
         >
           <Menu className="size-6" />
         </button>
       </nav>
 
-      {/* Mobile slide-in drawer */}
       <div
         className={cn(
           'fixed inset-0 z-50 md:hidden',
@@ -101,7 +136,21 @@ export function SiteHeader() {
           )}
         >
           <div className="flex items-center justify-between">
-            <span className="font-serif text-lg font-semibold">Menu</span>
+            <div className="flex items-center gap-3">
+              <span className="relative flex size-10 shrink-0 items-center justify-center rounded-full bg-foreground/90 ring-2 ring-gold/70">
+                <Image
+                  src="/images/logo-mark.png"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="size-full rounded-full object-cover brightness-125"
+                  aria-hidden
+                />
+              </span>
+              <span className="font-serif text-base font-medium tracking-wide uppercase">
+                Menu
+              </span>
+            </div>
             <button
               type="button"
               onClick={() => setOpen(false)}
@@ -117,7 +166,7 @@ export function SiteHeader() {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-xl px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
+                  className="block rounded-xl px-3 py-3 font-sans text-sm font-medium tracking-[0.1em] uppercase text-foreground transition-colors hover:bg-muted"
                 >
                   {link.label}
                 </a>
@@ -127,7 +176,7 @@ export function SiteHeader() {
           <a
             href="/#booking"
             onClick={() => setOpen(false)}
-            className="mt-auto inline-flex h-12 items-center justify-center rounded-2xl bg-gold px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-gold-hover"
+            className="mt-auto inline-flex h-12 items-center justify-center rounded-2xl bg-gold px-6 font-sans text-xs font-semibold tracking-[0.1em] uppercase text-primary-foreground transition-colors hover:bg-gold-hover"
           >
             Book Free Session
           </a>

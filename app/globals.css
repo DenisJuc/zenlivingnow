@@ -5,12 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-serif: var(--font-cormorant), Georgia, serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
 
   /* Brand palette */
   --color-background: #faf8f4;
-  --color-foreground: #262626;
+  --color-foreground: #2a241c;
   --color-surface: #ffffff;
   --color-muted-surface: #f7f6f3;
 
@@ -28,9 +29,9 @@
   --color-primary: #c8a96a;
   --color-primary-foreground: #ffffff;
   --color-secondary: #f4efe8;
-  --color-secondary-foreground: #262626;
+  --color-secondary-foreground: #2a241c;
   --color-muted: #f7f6f3;
-  --color-muted-foreground: #5a5a5a;
+  --color-muted-foreground: #5c5348;
   --color-accent: #8aa88a;
   --color-accent-foreground: #ffffff;
   --color-destructive: #b25050;
@@ -54,6 +55,13 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif font-medium tracking-wide;
   }
 }
 

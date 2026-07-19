@@ -1,19 +1,19 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Inter } from 'next/font/google'
+import { Oswald, Poppins } from 'next/font/google'
 import './globals.css'
 
-const cormorant = Cormorant_Garamond({
+const oswald = Oswald({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-cormorant',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-oswald',
   display: 'swap',
 })
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-inter',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
   display: 'swap',
 })
 
@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-background ${cormorant.variable} ${inter.variable}`}>
+    <html lang="en" className={`bg-background ${oswald.variable} ${poppins.variable}`}>
       <body className="antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

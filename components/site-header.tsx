@@ -3,14 +3,20 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+const RESOURCE_LINKS = [
+  { label: 'Blogs', href: '/blogs' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Certifications', href: '/certifications' },
+]
 
 const NAV_LINKS = [
   { label: 'Home', href: '/#home' },
   { label: 'About', href: '/#about' },
   { label: 'Services', href: '/#services' },
-  { label: 'Resources', href: '/#resources' },
+  { label: 'Resources', href: '/#resources', children: RESOURCE_LINKS },
   { label: 'Donation', href: '/#donation' },
 ]
 
@@ -19,6 +25,7 @@ export function SiteHeader() {
   const isHome = pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [resourcesOpen, setResourcesOpen] = useState(false)
   const light = isHome && !scrolled
 
   useEffect(() => {
@@ -27,6 +34,10 @@ export function SiteHeader() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    if (!open) setResourcesOpen(false)
+  }, [open])
 
   return (
     <header
@@ -76,21 +87,57 @@ export function SiteHeader() {
         </a>
 
         <ul className="hidden items-center gap-7 md:flex lg:gap-9">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={cn(
-                  'font-sans text-sm font-medium tracking-[0.1em] uppercase transition-colors',
-                  light
-                    ? 'text-white/90 hover:text-white'
-                    : 'text-muted-foreground hover:text-foreground',
-                )}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.children ? (
+              <li key={link.label} className="group relative">
+                <button
+                  type="button"
+                  className={cn(
+                    'inline-flex items-center gap-1.5 font-sans text-sm font-medium tracking-[0.1em] uppercase transition-colors',
+                    light
+                      ? 'text-white/90 hover:text-white'
+                      : 'text-muted-foreground hover:text-foreground',
+                  )}
+                  aria-haspopup="menu"
+                >
+                  {link.label}
+                  <ChevronDown className="size-3.5 transition-transform duration-200 group-hover:rotate-180" />
+                </button>
+                <div className="invisible absolute left-1/2 top-full z-50 w-52 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <ul
+                    role="menu"
+                    className="rounded-2xl border border-divider bg-surface py-2 shadow-[0_20px_50px_-24px_rgba(38,38,38,0.35)]"
+                  >
+                    {link.children.map((child) => (
+                      <li key={child.href} role="none">
+                        <a
+                          role="menuitem"
+                          href={child.href}
+                          className="block px-4 py-2.5 font-sans text-sm font-medium tracking-[0.08em] uppercase text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ) : (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className={cn(
+                    'font-sans text-sm font-medium tracking-[0.1em] uppercase transition-colors',
+                    light
+                      ? 'text-white/90 hover:text-white'
+                      : 'text-muted-foreground hover:text-foreground',
+                  )}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ),
+          )}
         </ul>
 
         <div className="hidden shrink-0 md:block">
@@ -161,17 +208,54 @@ export function SiteHeader() {
             </button>
           </div>
           <ul className="mt-8 flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl px-3 py-3 font-sans text-sm font-medium tracking-[0.1em] uppercase text-foreground transition-colors hover:bg-muted"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.children ? (
+                <li key={link.label}>
+                  <button
+                    type="button"
+                    onClick={() => setResourcesOpen((prev) => !prev)}
+                    className="flex w-full items-center justify-between rounded-xl px-3 py-3 font-sans text-sm font-medium tracking-[0.1em] uppercase text-foreground transition-colors hover:bg-muted"
+                    aria-expanded={resourcesOpen}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      className={cn(
+                        'size-4 transition-transform duration-200',
+                        resourcesOpen && 'rotate-180',
+                      )}
+                    />
+                  </button>
+                  <ul
+                    className={cn(
+                      'overflow-hidden transition-all duration-200',
+                      resourcesOpen ? 'mt-1 max-h-48 opacity-100' : 'max-h-0 opacity-0',
+                    )}
+                  >
+                    {link.children.map((child) => (
+                      <li key={child.href}>
+                        <a
+                          href={child.href}
+                          onClick={() => setOpen(false)}
+                          className="block rounded-xl px-5 py-2.5 font-sans text-sm font-medium tracking-[0.08em] uppercase text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-xl px-3 py-3 font-sans text-sm font-medium tracking-[0.1em] uppercase text-foreground transition-colors hover:bg-muted"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ),
+            )}
           </ul>
           <a
             href="/#booking"
